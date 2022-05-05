@@ -38,7 +38,7 @@ paths:
       tags:
         - stories
       summary: get subscribe users stories
-      description: "Получение списка сторис исходя из подписок. Объект хранит в себе список возможных медиа-типов и ID всех сторис пользователя"
+      description: "Получение списка сторис исходя из подписок. Один объект хранит в себе список возможных медиа-типов и количество сторис"
       responses:
         '200':
           description: ""
@@ -137,7 +137,7 @@ components:
         - username
         - username_profile_img_url
         - types
-        - ids
+        - amount
       properties:
         submit_id:
           type: integer
@@ -148,16 +148,14 @@ components:
         username_profile_img_url:
           type: string
           example: "https://www.gameartguppy.com/wp-content/uploads/2017/06/food-drink-coffee-cup.png"
+        amount:
+          type: integer
+          example: 5
         types:
           type: array
           items:
             type: string
           example: ["IMAGE", "LIVE", "VIDEO"]
-        ids:
-          type: array
-          items:
-            type: integer
-          example: [55, 58, 90, 34, 82]
           
     DeletedStory:
       type: object
