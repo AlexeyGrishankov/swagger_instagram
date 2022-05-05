@@ -101,8 +101,35 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/ErrorStoryDelete'
+                
+  /stories/viewers:
+    get:
+      tags:
+        - stories
+      summary: viewers of story
+      description: "Список просмотревших сторис"
+      parameters:
+        - name: story_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: ""
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ViewerStories'
 
-  
+        '504':
+          description: "Невозможно удалить сторис, если он не принадлежит владельцу"
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ErrorStoryDelete'
+
 components:
   schemas:
     Story:
@@ -113,6 +140,7 @@ components:
         - date_timestamp
         - url
         - type
+        - viewed
       properties:
         id:
           type: integer
@@ -129,6 +157,9 @@ components:
         type:
           type: string
           example: "IMAGE"
+        viewed:
+          type: boolean
+          example: false
           
     StoryFeed:
       type: object
@@ -138,6 +169,7 @@ components:
         - username_profile_img_url
         - types
         - amount
+        - viewed_all
       properties:
         submit_id:
           type: integer
@@ -156,6 +188,26 @@ components:
           items:
             type: string
           example: ["IMAGE", "LIVE", "VIDEO"]
+        viewed_all:
+          type: boolean
+          example: false
+          
+    ViewerStories:
+      type: object
+      required:
+        - id
+        - username
+        - username_profile_img_url
+      properties:
+        id:
+          type: integer
+          example: 14
+        username:
+          type: string
+          example: userrrr
+        username_profile_img_url:
+          type: string
+          example: "https://www.gameartguppy.com/wp-content/uploads/2017/06/food-drink-coffee-cup.png"
           
     DeletedStory:
       type: object
