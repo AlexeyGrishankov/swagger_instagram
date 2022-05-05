@@ -66,7 +66,7 @@ paths:
               schema: 
                 $ref: '#/components/schemas/Story'
         '504':
-          description: ""
+          description: "Ограничение на максимальное количество историй в день"
           content:
             application/json:
               schema: 
@@ -92,7 +92,7 @@ paths:
                 $ref: '#/components/schemas/DeletedStory'
 
         '504':
-          description: ""
+          description: "Невозможно удалить сторис, если он не принадлежит владельцу"
           content:
             application/json:
               schema: 
