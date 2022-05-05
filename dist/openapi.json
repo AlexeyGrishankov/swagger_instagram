@@ -1,0 +1,273 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "stories",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/stories/{user_id}": {
+      "get": {
+        "tags": [
+          "stories"
+        ],
+        "summary": "get stories",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list of stories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Story"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stories": {
+      "get": {
+        "tags": [
+          "stories"
+        ],
+        "summary": "get subscribe users stories",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StoryFeed"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "stories"
+        ],
+        "summary": "create story",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Story"
+              },
+              "example": {
+                "url": "https://www.gameartguppy.com/wp-content/uploads/2017/06/food-drink-coffee-cup.png",
+                "type": "IMAGE"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Story"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorStoryMaxDay"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "stories"
+        ],
+        "summary": "delete story",
+        "parameters": [
+          {
+            "name": "story_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletedStory"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorStoryDelete"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Story": {
+        "type": "object",
+        "required": [
+          "id",
+          "submit_id",
+          "date_timestamp",
+          "url",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 55
+          },
+          "submit_id": {
+            "type": "integer",
+            "example": 14
+          },
+          "date_timestamp": {
+            "type": "integer",
+            "example": 1651725065
+          },
+          "url": {
+            "type": "string",
+            "example": "https://www.gameartguppy.com/wp-content/uploads/2017/06/food-drink-coffee-cup.png"
+          },
+          "type": {
+            "type": "string",
+            "example": "IMAGE"
+          }
+        }
+      },
+      "StoryFeed": {
+        "type": "object",
+        "required": [
+          "submit_id",
+          "username",
+          "username_profile_img_url",
+          "types",
+          "ids"
+        ],
+        "properties": {
+          "submit_id": {
+            "type": "integer",
+            "example": 14
+          },
+          "username": {
+            "type": "string",
+            "example": "userrrr"
+          },
+          "username_profile_img_url": {
+            "type": "string",
+            "example": "https://www.gameartguppy.com/wp-content/uploads/2017/06/food-drink-coffee-cup.png"
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "IMAGE",
+              "LIVE",
+              "VIDEO"
+            ]
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "example": [
+              55,
+              58,
+              90,
+              34,
+              82
+            ]
+          }
+        }
+      },
+      "DeletedStory": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Confirm"
+          }
+        }
+      },
+      "ErrorStoryMaxDay": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Error, the maximum number of posts per day is 100"
+          }
+        }
+      },
+      "ErrorStoryDelete": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Error, you don't own this Story"
+          }
+        }
+      }
+    }
+  }
+}
