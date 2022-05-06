@@ -32,6 +32,33 @@ paths:
                 type: array
                 items: 
                   $ref: '#/components/schemas/Story'
+    put:
+      tags:
+        - stories
+      summary: view story
+      description: "Отметка, что сторис просмотрена"
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: list of stories
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Story'
                   
   /stories:
     get:
@@ -121,7 +148,9 @@ paths:
           content:
             application/json:
               schema: 
-                $ref: '#/components/schemas/ViewerStories'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ViewerStories'
 
         '504':
           description: "Невозможно удалить сторис, если он не принадлежит владельцу"
